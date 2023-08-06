@@ -1,9 +1,11 @@
 const express = require('express');
 const app = express();
 
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const randomBytes = require('randombytes');
 
+app.use(cors());
 app.use(bodyParser.json());
 
 // {id : [{commentId, content}, {commentId, content}]}
@@ -19,7 +21,7 @@ app.post('/posts/:id/comments', (req, res) => {
   const id = randomBytes(4).toString('hex');
 
   const comment = commentsById[req.params.id] || [];
-
+  commentsById[req.params.id] = comment;
   comment.push({
     id,
     content: req.body.content,
