@@ -16,13 +16,13 @@ app.post('/events', async (req, res) => {
   await axios
     .post('http://localhost:4001/events', event)
     .catch(err => console.log(err)); //Comment Service
-  //   await axios
-  //     .post('http://localhost:4002/events', event)
-  //     .catch(err => console.log(err)); //Query Service
+  await axios
+    .post('http://localhost:4002/events', event)
+    .catch(err => console.log(err)); //Query Service
 
   res.send({ status: 'OK' });
 });
 
-app.listen(4005, () => {
-  console.log('Listening on 4005');
+app.listen(4006, () => {
+  console.log('Listening on 4006');
 });
