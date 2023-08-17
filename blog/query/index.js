@@ -1,8 +1,10 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 app.use(bodyParser.json());
+app.use(cors());
 
 // query service will listen for events from event bus
 // and store them in memory
@@ -23,16 +25,25 @@ app.post('/events', (req, res) => {
 
   if (type === 'CommentCreated') {
     // const postId = postsAndComments[data.postId];
-    const { id, content, postId } = data;
+    const { id, content, postId, status } = data;
 
     //comments exists
     const comments = postsAndComments[postId]?.Comments || [];
     comments.push({
       id,
       content,
+      status,
     });
   }
-  console.log('postAndComments', postsAndComments);
+
+  if (type === 'CommentUpdated') {
+    const { id, content, postId, status } = data;
+    const comments = postsAndComments[postId]?.Comments || [];
+    const comment = comments.find(comment => comment.id === id);
+    comment.status = status;
+    comment.content = content;
+  }
+
   res.send({ status: 'OK' });
 });
 
