@@ -6,9 +6,14 @@ const axios = require('axios');
 //Read Events Emitted  by Posts & comment Services
 app.use(bodyParser.json());
 
+// Event bus data store
+const allEvents = [];
+
 //Event Bus
 app.post('/events', async (req, res) => {
   const event = req.body;
+
+  allEvents.push(event);
 
   await axios
     .post('http://localhost:4000/events', event)
@@ -24,6 +29,11 @@ app.post('/events', async (req, res) => {
     .catch(err => console.log(err)); //Moderation Service
 
   res.send({ status: 'OK' });
+});
+
+// Event Bus data store getter
+app.get('/events', (req, res) => {
+  res.send(allEvents);
 });
 
 app.listen(4006, () => {
