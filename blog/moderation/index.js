@@ -9,6 +9,7 @@ app.use(bodyParser.json());
 // Route: /events (POST) - Receive events from event bus and process them accordingly
 app.post('/events', async (req, res) => {
   const { type, data } = req.body;
+
   if (type === 'CommentCreated') {
     const status = data.content.includes('orange') ? 'rejected' : 'approved';
 
