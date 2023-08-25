@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+
+kind: Deployment
+
+metadata: posts-depl
+
+spec: 
+  replicas: 1
+  selector: 
+    matchlabels: 
+      app: posts
+    template:
+      metadata:
+        labels:
+          app: posts
+    spec: 
+      containers:
+        - name: posts-con
+         image: teclegacy/

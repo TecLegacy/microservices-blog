@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: comments-pod
+spec:
+  containers:
+    - name: comments-con
+      image: teclegacy/comments:0.0.1
+      imagePullPolicy: Never
