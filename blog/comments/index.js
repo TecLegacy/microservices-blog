@@ -12,6 +12,11 @@ app.use(bodyParser.json());
 // {id : [{commentId, content}, {commentId, content}]}
 const commentsById = {};
 
+//TEST DEPLOYMENT CODE
+app.get('/comments', (req, res) => {
+  res.send('<h1>Hello From K8s service</h1>');
+});
+
 // @GET /posts/:id/comments
 app.get('/posts/:id/comments', (req, res) => {
   res.send(commentsById[req.params.id]);
