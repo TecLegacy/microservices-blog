@@ -72,5 +72,6 @@ app.post('/events', async (req, res) => {
 });
 
 app.listen(4001, () => {
+  console.log('v2');
   console.log('Listen to port 4001');
 });
