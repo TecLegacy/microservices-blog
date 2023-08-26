@@ -1,18 +1,17 @@
-# Deployment: comments-depl
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: comments-depl
+  name: event-bus-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: comments
+      app: event-bus
   template:
     metadata:
       labels:
-        app: comments
+        app: event-bus
     spec:
       containers:
-        - name: comments
-          image: teclegacy/comments
+        - name: event-bus
+          image: teclegacy/event-bus

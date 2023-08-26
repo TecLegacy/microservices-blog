@@ -13,6 +13,11 @@ app.use(bodyParser.json());
 // In memory -> id : hexId , title : string
 const post = {};
 
+//K8 development route
+app.get('/testposts', (req, res) => {
+  res.send('<h1>K8s Posts deployment pod running 1 replica</h1>');
+});
+
 // @GET /posts -> show all posts
 app.get('/posts', (req, res) => {
   res.send(post);
@@ -29,7 +34,7 @@ app.post('/posts', async (req, res) => {
   };
 
   // Emitted Events
-  await axios.post('http://localhost:4006/events', {
+  await axios.post('http://event-bus-clusterip:4006/events', {
     type: 'PostCreated',
     data: {
       id,
@@ -43,7 +48,6 @@ app.post('/posts', async (req, res) => {
 // @POST /events -> receive events
 app.post('/events', (req, res) => {
   console.log('Received Event', req.body.type);
-
   res.send({});
 });
 

@@ -1,18 +1,18 @@
-# Deployment: comments-depl
+# Deployment: posts-depl
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: comments-depl
+  name: posts-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: comments
+      app: posts
   template:
     metadata:
       labels:
-        app: comments
+        app: posts
     spec:
       containers:
-        - name: comments
-          image: teclegacy/comments
+        - name: posts
+          image: teclegacy/posts

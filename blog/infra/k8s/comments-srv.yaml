@@ -1,10 +1,26 @@
+#  NodePort: comments-srv
 apiVersion: v1
 kind: Service
 metadata:
   name: comments-srv
 spec:
   type: NodePort
-  selector: 
+  selector:
+    app: comments
+  ports:
+    - name: comments
+      protocol: TCP
+      port: 4001
+      targetPort: 4001
+---
+# Cluster Ip Service: comments-srv-cluster-ip
+apiVersion: v1
+kind: Service
+metadata:
+  name: comments-srv-clusterip
+spec:
+  type: ClusterIP # Implicit default value if not given
+  selector:
     app: comments
   ports:
     - name: comments

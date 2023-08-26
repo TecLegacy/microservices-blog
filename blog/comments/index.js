@@ -14,7 +14,7 @@ const commentsById = {};
 
 //TEST DEPLOYMENT CODE
 app.get('/comments', (req, res) => {
-  res.send('<h1>Hello From K8s service</h1>');
+  res.send('<h1>Hello From K8s SERVICE</h1>');
 });
 
 // @GET /posts/:id/comments
@@ -34,7 +34,7 @@ app.post('/posts/:id/comments', async (req, res) => {
     status: 'pending',
   });
 
-  await axios.post('http://localhost:4006/events', {
+  await axios.post('http://event-bus-clusterip:4006/events', {
     type: 'CommentCreated',
     data: {
       id,
@@ -62,7 +62,7 @@ app.post('/events', async (req, res) => {
 
     comment.status = status;
 
-    await axios.post('http://localhost:4006/events', {
+    await axios.post('http://event-bus-clusterip:4006/events', {
       type: 'CommentUpdated',
       data: {
         id,
