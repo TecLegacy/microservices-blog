@@ -1,0 +1,14 @@
+# Cluster Ip Service: moderation-srv-cluster-ip
+apiVersion: v1
+kind: Service
+metadata:
+  name: moderation-srv-clusterip
+spec:
+  type: ClusterIP # Implicit default value if not given
+  selector:
+    app: moderation
+  ports:
+    - name: moderation
+      protocol: TCP
+      port: 4003
+      targetPort: 4003

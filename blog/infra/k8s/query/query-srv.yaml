@@ -1,0 +1,14 @@
+# Cluster Ip Service: query-srv-cluster-ip
+apiVersion: v1
+kind: Service
+metadata:
+  name: query-srv-clusterip
+spec:
+  type: ClusterIP # Implicit default value if not given
+  selector:
+    app: query
+  ports:
+    - name: query
+      protocol: TCP
+      port: 4002
+      targetPort: 4002

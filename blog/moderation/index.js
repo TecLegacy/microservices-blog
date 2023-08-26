@@ -15,7 +15,7 @@ app.post('/events', async (req, res) => {
 
     // Emit CommentModerated event to event bus
     // Event Bus will send this event to CommentService
-    await axios.post('http://localhost:4006/events', {
+    await axios.post('http://event-bus-clusterip:4006/events', {
       type: 'CommentModerated',
       data: {
         id: data.id,

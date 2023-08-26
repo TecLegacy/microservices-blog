@@ -58,7 +58,7 @@ app.listen(4002, async () => {
 
   // get all events from event bus after query service is restarted/down
   try {
-    const res = await axios.get('http://localhost:4006/events');
+    const res = await axios.get('http://event-bus-clusterip:4006/events');
 
     for (let event of res.data) {
       console.log('Processing event:', event.type);
