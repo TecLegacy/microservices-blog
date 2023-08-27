@@ -1,0 +1,18 @@
+# Deployment: react-depl
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: react
+  template:
+    metadata:
+      labels:
+        app: react
+    spec:
+      containers:
+        - name: react
+          image: teclegacy/vite-react-app

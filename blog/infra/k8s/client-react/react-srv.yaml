@@ -1,0 +1,14 @@
+# Cluster Ip Service: react-srv-cluster-ip
+apiVersion: v1
+kind: Service
+metadata:
+  name: react-srv-clusterip
+spec:
+  type: ClusterIP # Implicit default value if not given
+  selector:
+    app: react
+  ports:
+    - name: react
+      protocol: TCP
+      port: 5173 #Vite react is hosted on port 5173
+      targetPort: 5173
