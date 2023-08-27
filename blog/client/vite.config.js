@@ -11,6 +11,9 @@ export default defineConfig({
     host: true,
     strictPort: true,
     port: 9002,
+    watch: {
+      usePolling: true, // Linux subsystem doesn't support fs.watch sometimes (e.g. WSL2)
+    },
     // proxy: {
     //   '/api': {
     //     target: 'http://localhost:5000',

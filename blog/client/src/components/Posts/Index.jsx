@@ -11,7 +11,7 @@ const PostCreate = () => {
     //Send data /posts - title
     try {
       console.log(postTitle);
-      await axios.post('http://posts.com/posts', {
+      await axios.post('http://posts.com/posts/create', {
         title: postTitle,
       });
       console.log('data sent');
