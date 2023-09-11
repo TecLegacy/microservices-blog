@@ -1,0 +1,14 @@
+# cluster ip for auth
+apiVersion: v1
+kind: Service
+type: ClusterIP
+metadata:
+  name: auth-srv
+spec:
+  selector:
+    app: auth
+  ports:
+    - name: auth
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
