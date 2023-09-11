@@ -1,10 +1,10 @@
 # cluster ip for auth
 apiVersion: v1
 kind: Service
-type: ClusterIP
 metadata:
   name: auth-srv
 spec:
+  type: ClusterIP
   selector:
     app: auth
   ports:
