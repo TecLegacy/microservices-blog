@@ -14,4 +14,4 @@ spec:
     spec:
       containers:
         - name: auth-depl
-          image: teclegacy/ticket/auth
+          image: gcr.io/ticketing-dev-398815/auth

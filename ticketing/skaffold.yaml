@@ -5,10 +5,12 @@ manifests:
     - ./infra/k8s/**/*
     # - ./infra/k8s/ingress-nginx/*
 build:
-  local:
-    push: false
+  # local:
+  #   push: false
+  googleCloudBuild:
+    projectId: ticketing-dev-398815
   artifacts:
-    - image: teclegacy/ticket/auth
+    - image: gcr.io/ticketing-dev-398815/auth
       context: auth
       sync:
         manual:
