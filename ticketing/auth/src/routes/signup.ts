@@ -18,16 +18,16 @@ router.post(
       .isLength({ min: 4, max: 20 })
       .withMessage('Password must be between 4 and 20 characters'),
   ],
-  (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response) => {
     const error = validationResult(req);
 
     //Not Empty = true
     if (!error.isEmpty()) {
       const err = error.array();
-      return next(new RequestValidationError(err));
+      throw new RequestValidationError(err);
     }
 
-    throw next(new DatabaseValidationError('for logs'));
+    // throw new DatabaseValidationError('for logs');
 
     res.send('Hi there!');
   }
