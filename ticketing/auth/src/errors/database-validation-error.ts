@@ -1,13 +1,15 @@
-export class DatabaseValidationError extends Error {
+import { CustomError } from './custom-error-abstract';
+
+export class DatabaseValidationError extends CustomError {
   statusCode = 500;
   reason = 'Connection to data-base failed!';
-  constructor() {
-    super();
+  constructor(private loggingMessage?: string) {
+    super(loggingMessage);
 
     Object.setPrototypeOf(this, DatabaseValidationError.prototype);
   }
 
-  serializeErrors() {
+  serializedError() {
     return [
       {
         message: this.reason,

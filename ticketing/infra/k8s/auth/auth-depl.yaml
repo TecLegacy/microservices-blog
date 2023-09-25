@@ -13,6 +13,13 @@ spec:
         app: auth
     spec:
       containers:
+        # image: gcr.io/ticketing-dev-398815/auth
         - name: auth-depl
           image: teclegacy/ticket/auth
-          # image: gcr.io/ticketing-dev-398815/auth
+          resources:
+            limits:
+              cpu: '1'
+              memory: '512Mi'
+            requests:
+              cpu: '500m'
+              memory: '256Mi'

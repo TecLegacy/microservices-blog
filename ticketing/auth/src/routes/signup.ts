@@ -12,7 +12,7 @@ const router = express.Router();
 router.post(
   '/api/users/signup',
   [
-    body('email').isEmail().withMessage('Enter valid email!'),
+    body('email').isEmail().withMessage('Email must be Valid!'),
     body('password')
       .trim()
       .isLength({ min: 4, max: 20 })
@@ -27,7 +27,7 @@ router.post(
       return next(new RequestValidationError(err));
     }
 
-    throw next(new DatabaseValidationError());
+    throw next(new DatabaseValidationError('for logs'));
 
     res.send('Hi there!');
   }
