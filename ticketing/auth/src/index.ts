@@ -1,4 +1,5 @@
 import express, { NextFunction } from 'express';
+import mongoose from 'mongoose';
 import 'express-async-errors';
 import { json } from 'body-parser';
 
@@ -27,6 +28,16 @@ app.all('*', (_, __, next: NextFunction) => {
 //Middleware
 app.use(errorHandler);
 
-app.listen(3000, () => {
-  console.log('Server running on port 3000!!');
-});
+const startUp = async () => {
+  try {
+    await mongoose.connect('mongodb://auth-mongo-srv:27017/auth');
+    console.log('Connected to MongoDb');
+  } catch (err) {
+    console.error(err);
+  }
+  app.listen(3000, () => {
+    console.log('Server running on port 3000!!');
+  });
+};
+
+startUp();
