@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { Password } from '../services/password';
 
 // An interface that describes the properties
 // that are required to create a new User
@@ -29,6 +30,15 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+});
+
+//Crypt password before saving in db
+userSchema.pre('save', async function (done) {
+  if (this.isModified('password')) {
+    const hashPass = await Password.toHash(this.get('password'));
+    this.set('password', hashPass);
+  }
+  done();
 });
 
 //Adding Static method to MongooseModel
