@@ -1,6 +1,26 @@
 import mongoose from 'mongoose';
 
-const userSechema = new mongoose.Schema({
+// An interface that describes the properties
+// that are required to create a new User
+interface UserAttributes {
+  email: string;
+  password: string;
+}
+
+// An interface that describes the properties
+// that a User Model has (like static methods)
+interface UserModel extends mongoose.Model<any, any> {
+  build(attrs: UserAttributes): UserDoc;
+}
+
+// An interface that describes the properties
+// that a User Document has
+interface UserDoc extends mongoose.Document {
+  email: string;
+  password: string;
+}
+
+const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
@@ -10,3 +30,27 @@ const userSechema = new mongoose.Schema({
     required: true,
   },
 });
+
+//Adding Static method to MongooseModel
+userSchema.statics.build = (attrs: UserAttributes) => {
+  return new User(attrs);
+};
+
+const User = mongoose.model<UserDoc, UserModel>('User', userSchema);
+
+export { User };
+
+// User.build({
+//   email: 'ss',
+//   password: 'ww',
+// });
+
+//Adding type checking to mongoose documents
+// const build = (attr:UserAttributes) => {
+//   return new User(attr);
+// };
+
+// build({
+//   email:'q',
+//   password:'q'
+// })

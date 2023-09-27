@@ -2,7 +2,7 @@ import { CustomError } from './custom-error-abstract';
 
 export class NotFoundError extends CustomError {
   statusCode = 404;
-  constructor(private loggingMessage?: string) {
+  constructor(public loggingMessage?: string) {
     super(loggingMessage);
 
     Object.setPrototypeOf(this, NotFoundError.prototype);
