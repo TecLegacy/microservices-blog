@@ -10,7 +10,7 @@ interface UserAttributes {
 
 // An interface that describes the properties
 // that a User Model has (like static methods)
-interface UserModel extends mongoose.Model<any, any> {
+interface UserModel extends mongoose.Model<UserDoc> {
   build(attrs: UserAttributes): UserDoc;
 }
 
