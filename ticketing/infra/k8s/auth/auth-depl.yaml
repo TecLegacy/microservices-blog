@@ -16,6 +16,12 @@ spec:
         # image: gcr.io/ticketing-dev-398815/auth
         - name: auth-depl
           image: teclegacy/ticket/auth
+          env:
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
           resources:
             limits:
               cpu: '1'
