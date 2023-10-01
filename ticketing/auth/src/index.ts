@@ -2,6 +2,7 @@ import express, { NextFunction } from 'express';
 import mongoose from 'mongoose';
 import 'express-async-errors';
 import { json } from 'body-parser';
+import cookieSession from 'cookie-session';
 
 import { currentUserRouter } from './routes/current-user';
 import { signinRouter } from './routes/signin';
@@ -12,8 +13,17 @@ import { signupRouter } from './routes/signup';
 import { errorHandler } from './middleware/error-handler';
 
 import { NotFoundError } from './errors/not-found-error';
+
 const app = express();
+app.set('trust proxy', true); // Trust traffic from ingress-nginx
 app.use(json());
+
+app.use(
+  cookieSession({
+    signed: false, // Not encrypted
+    secure: true, // Only use cookies if user is visiting our app over https connection
+  })
+);
 
 app.use(currentUserRouter);
 app.use(signinRouter);
