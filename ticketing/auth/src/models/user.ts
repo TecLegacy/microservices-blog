@@ -32,6 +32,8 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
   },
+  // JSON that will be sent to browser view will be changed
+  // Consistent response across all Services
   {
     toJSON: {
       transform(doc, ret) {

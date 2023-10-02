@@ -1,7 +1,12 @@
 import express, { Request, Response } from 'express';
-import { body, validationResult } from 'express-validator';
-import { RequestValidationError } from '../errors/request-validation-error';
+import { body } from 'express-validator';
+import jwt from 'jsonwebtoken';
+
 import { User } from '../models/user';
+import { validateRequest } from '../middleware/request-validation';
+import { BadRequestError } from '../errors/bad-request-error';
+import { Password } from '../services/password';
+
 const router = express.Router();
 
 /**
@@ -11,5 +16,45 @@ const router = express.Router();
  * @ param email, password
  * @ return user
  */
+router.post(
+  '/api/users/signin',
+  [
+    body('email').isEmail().withMessage('Email Must be Valid!'),
+    body('password').trim().notEmpty(),
+  ],
+  // Validate express-validator body & password
+  validateRequest,
+
+  async (req: Request, res: Response) => {
+    const { email, password } = req.body;
+
+    // Does user Exists in AuthDB
+    const existingUser = await User.findOne({ email });
+    console.log(existingUser); // checking how our singup response view ret on mongodb model worked
+    if (!existingUser) {
+      throw new BadRequestError('Invalid Credentials');
+    }
+
+    //Check Password with storedPassword
+    const userPass = await Password.comparePassword(
+      existingUser.password,
+      password
+    );
+
+    if (!userPass) {
+      throw new BadRequestError('Invalid Credentials');
+    }
+
+    // Generate JWT
+    const userJwt = jwt.sign(
+      { id: existingUser.id, email: existingUser.email },
+      process.env.JWT_KEY!
+    );
+    // Add to jwt to cookie-session
+    req.session = { jwt: userJwt };
+
+    res.status(200).send(existingUser);
+  }
+);
 
 export { router as signinRouter };
