@@ -1,4 +1,7 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
+import { body, validationResult } from 'express-validator';
+import { RequestValidationError } from '../errors/request-validation-error';
+import { User } from '../models/user';
 const router = express.Router();
 
 /**
@@ -8,8 +11,5 @@ const router = express.Router();
  * @ param email, password
  * @ return user
  */
-router.post('/api/users/signin', (req, res) => {
-  res.send('signin');
-});
 
 export { router as signinRouter };
