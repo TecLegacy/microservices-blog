@@ -10,7 +10,9 @@ const router = express.Router();
  * @ return user
  */
 router.get('/api/users/signout', (req, res) => {
-  res.send('custom signout');
+  req.session = null;
+
+  res.send({});
 });
 
 export { router as signoutRouter };

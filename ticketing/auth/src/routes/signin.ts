@@ -30,7 +30,7 @@ router.post(
 
     // Does user Exists in AuthDB
     const existingUser = await User.findOne({ email });
-    console.log(existingUser); // checking how our singup response view ret on mongodb model worked
+
     if (!existingUser) {
       throw new BadRequestError('Invalid Credentials');
     }
