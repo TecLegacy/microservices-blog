@@ -12,7 +12,16 @@ export interface UserPayload {
   email: string;
 }
 
+declare global {
+  namespace Express {
+    interface Request {
+      currentUser?: UserPayload;
+    }
+  }
+}
+
 const currentUser = (req: Request, _res: Response, next: NextFunction) => {
+  // Check is cookie is valid & present
   if (!req.session?.jwt) {
     // Pass it to auth middleware
     return next();
@@ -21,7 +30,7 @@ const currentUser = (req: Request, _res: Response, next: NextFunction) => {
   try {
     const payload = jwt.verify(
       req.session.jwt,
-      process.env.JWT!
+      process.env.JWT_KEY!
     ) as UserPayload;
     req.currentUser = payload;
   } catch (err) {}
