@@ -7,6 +7,7 @@ import { BadRequestError } from '../errors/bad-request-error';
 import { validateRequest } from '../middleware/request-validation';
 
 const router = express.Router();
+
 /**
  * @ route POST /api/users/signup
  * @ desc create a user

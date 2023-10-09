@@ -9,7 +9,7 @@ const router = express.Router();
  * @ param email, password
  * @ return user
  */
-router.get('/api/users/signout', (req, res) => {
+router.post('/api/users/signout', (req, res) => {
   req.session = null;
 
   res.send({});

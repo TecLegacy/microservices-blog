@@ -1,7 +1,7 @@
 export abstract class CustomError extends Error {
   abstract statusCode: number;
 
-  constructor(public loggingMessage?: string) {
+  constructor(protected loggingMessage?: string) {
     super(loggingMessage);
 
     Object.setPrototypeOf(this, CustomError.prototype);
