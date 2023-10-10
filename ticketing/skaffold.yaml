@@ -19,3 +19,13 @@ build:
             dest: .
       docker:
         dockerfile: Dockerfile
+
+    # - image: teclegacy/ticket/client
+    #   # - image: gcr.io/ticketing-dev-398815/auth
+    #   context: client
+    #   sync:
+    #     manual:
+    #       - src: 'src/**/*.{ts,tsx}'
+    #         dest: .
+    #   docker:
+    #     dockerfile: Dockerfile

@@ -16,6 +16,7 @@ spec:
         # image: gcr.io/ticketing-dev-398815/auth
         - name: auth-depl
           image: teclegacy/ticket/auth
+          imagePullPolicy: Never
           env:
             - name: JWT_KEY
               valueFrom:
