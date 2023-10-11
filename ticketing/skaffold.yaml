@@ -20,7 +20,7 @@ build:
       docker:
         dockerfile: Dockerfile
 
-    - image: teclegacy/ticket/client
+    - image: teclegacy/client-next
       context: client
       sync:
         manual:
