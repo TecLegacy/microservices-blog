@@ -1,6 +1,9 @@
+// 'use client';
 import Button from '@/components/ui/Button';
 
+import toast from 'react-hot-toast';
 export default function Home() {
+  // const notify = () => toast('Here is your toast.');
   return (
     <>
       <h1>Hello</h1>
@@ -16,7 +19,7 @@ export default function Home() {
         ...
       </button>
 
-      <Button> w </Button>
+      {/* <Button onClick={notify}> w </Button> */}
     </>
   );
 }
