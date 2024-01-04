@@ -10,7 +10,7 @@ COPY . .
 
 CMD ["npm", "run", "dev"]
 
-EXPOSE 3001
+EXPOSE 3100
 
 # docker build -t nextjs-docker .
 # docker run -p 3000:3000 nextjs-docker
