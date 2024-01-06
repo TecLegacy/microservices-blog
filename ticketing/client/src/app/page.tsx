@@ -8,7 +8,9 @@ export default function Home() {
       <h1>Hello</h1>
 
       <Button
-        variant="outline"
+        variant="default"
+        className=""
+        // className=" bg-white  underline-offset-4 hover:underline"
         onClick={() =>
           toast('Event has been created', {
             description: 'Sunday, December 03, 2023 at 9:00 AM',
