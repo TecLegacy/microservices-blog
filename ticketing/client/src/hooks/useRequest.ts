@@ -7,20 +7,28 @@ type Method = 'get' | 'post';
 interface Prop {
   url: string;
   method: Method;
-  // body: FromValue;
 }
 
+type ErrorType = {
+  message: string;
+  field?: string;
+}[];
+
 export const useRequest = ({ url, method }: Prop) => {
-  const [data, setData] = useState();
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<ErrorType | null>(null);
 
   async function doRequest(body: FromValue) {
     try {
+      setError(null);
       const response = await axios({ url, method, data: body });
       return response.data;
-    } catch (err) {
-      console.log(err);
-      // setError(err)
+    } catch (err: any) {
+      setError(err.response.data.error);
+      // setError([
+      //   {
+      //     message: 'something went wrong',
+      //   },
+      // ]);
     }
   }
   return { doRequest, error };

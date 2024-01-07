@@ -5,7 +5,11 @@ import { ProfileForm } from './components/ProfileForm';
 interface PageProps {}
 
 const Page: FC<PageProps> = ({}) => {
-  return <ProfileForm />;
+  return (
+    <>
+      <ProfileForm />
+    </>
+  );
 };
 
 export default Page;
