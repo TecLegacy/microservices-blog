@@ -2,8 +2,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-
+import { useRequest } from '@/hooks/useRequest';
+import { showToast } from '@/components/ui/sonner';
 import { formSchema, FromValue } from '@/lib/validation/formValidation';
+
 import {
   Form,
   FormControl,
@@ -13,7 +15,6 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { useRequest } from '@/hooks/useRequest';
 
 export function ProfileForm() {
   const form = useForm<FromValue>({
@@ -34,16 +35,9 @@ export function ProfileForm() {
     await doRequest(values);
   }
 
-  // if (error && error.length > 0) {
-  //   return error.map((e) => toast(e.message));
-  // toast(error.map(e), {
-  //   description: 'Sunday, December 03, 2023 at 9:00 AM',
-  //   action: {
-  //     label: 'Undo',
-  //     onClick: () => console.log('Undo'),
-  //   },
-  // });
-  // }
+  if (error && error.length > 0) {
+    error.forEach((e) => showToast(e.message));
+  }
 
   return (
     <>
@@ -82,7 +76,6 @@ export function ProfileForm() {
         </form>
       </Form>
       <div>
-        show here
         <ul>
           {error && error?.map((e) => <li key={e.message}>{e.message}</li>)}
         </ul>

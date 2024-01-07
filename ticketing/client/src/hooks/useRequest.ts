@@ -20,15 +20,14 @@ export const useRequest = ({ url, method }: Prop) => {
   async function doRequest(body: FromValue) {
     try {
       setError(null);
-      const response = await axios({ url, method, data: body });
+      const response = await axios({
+        url,
+        method,
+        data: body,
+      });
       return response.data;
     } catch (err: any) {
       setError(err.response.data.error);
-      // setError([
-      //   {
-      //     message: 'something went wrong',
-      //   },
-      // ]);
     }
   }
   return { doRequest, error };
