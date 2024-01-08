@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+// import { Button } from '@/components/ui/button';
 import { useRequest } from '@/hooks/useRequest';
 import { showToast } from '@/components/ui/sonner';
 import { formSchema, FromValue } from '@/lib/validation/formValidation';
@@ -15,8 +15,11 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import { useRouter } from 'next/navigation';
 
 export function ProfileForm() {
+  const router = useRouter();
+
   const form = useForm<FromValue>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -28,11 +31,13 @@ export function ProfileForm() {
   const { doRequest, error } = useRequest({
     url: '/api/users/signup',
     method: 'post',
+    onSuccess: () => router.push('/'),
   });
 
   async function onSubmit(values: FromValue) {
     console.log(values);
-    await doRequest(values);
+    const response = await doRequest(values);
+    console.log(response);
   }
 
   if (error && error.length > 0) {

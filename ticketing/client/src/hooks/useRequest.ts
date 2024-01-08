@@ -7,6 +7,7 @@ type Method = 'get' | 'post';
 interface Prop {
   url: string;
   method: Method;
+  onSuccess: () => void;
 }
 
 type ErrorType = {
@@ -14,7 +15,7 @@ type ErrorType = {
   field?: string;
 }[];
 
-export const useRequest = ({ url, method }: Prop) => {
+export const useRequest = ({ url, method, onSuccess }: Prop) => {
   const [error, setError] = useState<ErrorType | null>(null);
 
   async function doRequest(body: FromValue) {
@@ -25,6 +26,10 @@ export const useRequest = ({ url, method }: Prop) => {
         method,
         data: body,
       });
+      if (onSuccess) {
+        onSuccess();
+      }
+      console.log('success');
       return response.data;
     } catch (err: any) {
       setError(err.response.data.error);

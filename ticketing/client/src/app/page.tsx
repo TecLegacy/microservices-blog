@@ -1,28 +1,92 @@
-'use client';
-import { Button } from '@/components/ui/button';
-import { toast } from 'sonner';
-
-export default function Home() {
+// 'use client';
+import axios from 'axios';
+export default async function Home() {
+  const da = await data();
+  // const d = await getUser();
+  console.log('clean');
+  console.log(da?.data.id);
   return (
     <>
       <h1>Hello</h1>
-
-      <Button
-        variant="default"
-        className=""
-        // className=" bg-white  underline-offset-4 hover:underline"
-        onClick={() =>
-          toast('Event has been created', {
-            description: 'Sunday, December 03, 2023 at 9:00 AM',
-            action: {
-              label: 'Undo',
-              onClick: () => console.log('Undo'),
-            },
-          })
-        }
-      >
-        Show Toast
-      </Button>
     </>
   );
+}
+
+// async function getUser() {
+// const response = await fetch(
+//   'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local/api/users/currentuser',
+//   {
+//     headers: {
+//       host: 'ticketing.dev',
+//     },
+//   },
+// );
+
+//   const response = await fetch('http://auth-srv/api/users/currentuser');
+//   console.log(response);
+//   if (!response.ok) throw new Error('Bad request');
+
+//   const data = response.json();
+//   return data;
+// }
+// async function getUser() {
+//   try {
+//     // const response = await fetch('http://auth-srv/api/users/currentuser');
+//     const response = await fetch(
+//       'https://jsonplaceholder.typicode.com/posts/1',
+//     );
+//     // console.log(response);
+//     if (!response.ok) throw new Error('Bad request');
+
+//     const data = await response.json();
+//     return data;
+//   } catch (error) {
+//     console.error('Error fetching user:', error);
+//     // throw error; // re-throw the error if you want it to propagate
+//   }
+// }
+
+// async function getUser() {
+//   try {
+//     const response = await fetch('http://auth-srv/api/users/currentuser');
+//     if (!response.ok) throw new Error('Bad request');
+
+//     const data = await response.json();
+//     return data;
+//   } catch (error) {
+//     console.error('Error fetching user:', error);
+//     // throw error;
+//   }
+// }
+async function data() {
+  try {
+    // const response = await fetch(
+    //   // 'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local/api/users/currentuser',
+    //   // 'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local',
+    //   'https://jsonplaceholder.typicode.com/posts/1',
+    //   {
+    //     headers: {
+    //       host: 'ticketing.dev',
+    //     },
+    //   },
+    // );
+    const res = await axios.get('/posts/1', {
+      headers: {
+        host: 'jsonplaceholder.typicode.com',
+      },
+    });
+    // if (!dam.ok) {
+    //   throw new Error('Network response was not ok');
+    // }
+
+    // // const response = await fetch('http://auth-srv/api/users/currentuser');
+    // const response = await fetch('http://auth-srv/api/users/currentuser');
+    // // console.log(response);
+    // if (!response.ok) throw new Error('Bad request');
+
+    return res;
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    // throw error; // re-throw the error if you want it to propagate
+  }
 }
