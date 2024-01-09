@@ -1,10 +1,26 @@
-// 'use client';
 import axios from 'axios';
+import { cookies, headers } from 'next/headers';
+
 export default async function Home() {
-  const da = await data();
-  // const d = await getUser();
-  console.log('clean');
-  console.log(da?.data.id);
+  // const cookieStore = cookies();
+  // console.log(cookieStore.get('session'));
+  // console.log(cookieStore.get('bodyMan'));
+  // console.log('xxxxxxxxxxxxxxxx');
+  const currentUser = await getUser();
+  console.log(currentUser, 'xxxxxxxxxxxxxxxxxxx');
+  // const headersList = headers();
+  // console.log(headersList.get('host'));
+  // // console.log(headersList.get('cookie')?.includes('session'));
+  // const cookies = headersList.get('cookie')?.split('; ');
+  // const sessionCookie = cookies?.find((cookie) =>
+  //   cookie.startsWith('session='),
+  // );
+
+  // if (sessionCookie) {
+  //   const sessionValue = sessionCookie.split('=')[1];
+  //   console.log(sessionValue);
+  // }
+
   return (
     <>
       <h1>Hello</h1>
@@ -12,81 +28,31 @@ export default async function Home() {
   );
 }
 
-// async function getUser() {
-// const response = await fetch(
-//   'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local/api/users/currentuser',
-//   {
-//     headers: {
-//       host: 'ticketing.dev',
-//     },
-//   },
-// );
+const getUser = async () => {
+  const headersList = headers();
+  console.log(headersList.get('host'));
+  // console.log(headersList.get('cookie')?.includes('session'));
+  const cookies = headersList.get('cookie')?.split('; ');
+  const sessionCookie = cookies?.find((cookie) =>
+    cookie.startsWith('session='),
+  );
 
-//   const response = await fetch('http://auth-srv/api/users/currentuser');
-//   console.log(response);
-//   if (!response.ok) throw new Error('Bad request');
-
-//   const data = response.json();
-//   return data;
-// }
-// async function getUser() {
-//   try {
-//     // const response = await fetch('http://auth-srv/api/users/currentuser');
-//     const response = await fetch(
-//       'https://jsonplaceholder.typicode.com/posts/1',
-//     );
-//     // console.log(response);
-//     if (!response.ok) throw new Error('Bad request');
-
-//     const data = await response.json();
-//     return data;
-//   } catch (error) {
-//     console.error('Error fetching user:', error);
-//     // throw error; // re-throw the error if you want it to propagate
-//   }
-// }
-
-// async function getUser() {
-//   try {
-//     const response = await fetch('http://auth-srv/api/users/currentuser');
-//     if (!response.ok) throw new Error('Bad request');
-
-//     const data = await response.json();
-//     return data;
-//   } catch (error) {
-//     console.error('Error fetching user:', error);
-//     // throw error;
-//   }
-// }
-async function data() {
-  try {
-    // const response = await fetch(
-    //   // 'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local/api/users/currentuser',
-    //   // 'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local',
-    //   'https://jsonplaceholder.typicode.com/posts/1',
-    //   {
-    //     headers: {
-    //       host: 'ticketing.dev',
-    //     },
-    //   },
-    // );
-    const res = await axios.get('/posts/1', {
-      headers: {
-        host: 'jsonplaceholder.typicode.com',
-      },
-    });
-    // if (!dam.ok) {
-    //   throw new Error('Network response was not ok');
-    // }
-
-    // // const response = await fetch('http://auth-srv/api/users/currentuser');
-    // const response = await fetch('http://auth-srv/api/users/currentuser');
-    // // console.log(response);
-    // if (!response.ok) throw new Error('Bad request');
-
-    return res;
-  } catch (error) {
-    console.error('Error fetching user:', error);
-    // throw error; // re-throw the error if you want it to propagate
+  if (sessionCookie) {
+    const sessionValue = sessionCookie.split('=')[1];
+    console.log(sessionValue);
   }
-}
+  try {
+    const { data } = await axios.get(
+      'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local/api/users/currentuser',
+      {
+        headers: {
+          host: headersList.get('host'),
+          cookie: sessionCookie,
+        },
+      },
+    );
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};

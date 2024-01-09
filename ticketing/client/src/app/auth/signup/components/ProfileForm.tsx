@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
-// import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { useRequest } from '@/hooks/useRequest';
 import { showToast } from '@/components/ui/sonner';
 import { formSchema, FromValue } from '@/lib/validation/formValidation';
@@ -35,7 +35,7 @@ export function ProfileForm() {
   });
 
   async function onSubmit(values: FromValue) {
-    console.log(values);
+    // console.log(values);
     const response = await doRequest(values);
     console.log(response);
   }

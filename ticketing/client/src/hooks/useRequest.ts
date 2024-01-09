@@ -29,7 +29,7 @@ export const useRequest = ({ url, method, onSuccess }: Prop) => {
       if (onSuccess) {
         onSuccess();
       }
-      console.log('success');
+      // console.log('success');
       return response.data;
     } catch (err: any) {
       setError(err.response.data.error);

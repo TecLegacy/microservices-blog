@@ -13,9 +13,11 @@ router.get(
   currentUser,
   // isAuthenticated,
   (req, res) => {
+    console.log('from server', req.session);
     res.status(200).send({
       currentUser: req.currentUser || null,
     });
+    // res.send({});
   }
 );
 

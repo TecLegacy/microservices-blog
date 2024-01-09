@@ -1,12 +1,14 @@
 import axios from 'axios';
 import { FC } from 'react';
-
+import { headers } from 'next/headers';
 interface PageProps {}
 
 const Page: FC<PageProps> = async ({}) => {
-  const d = await Work();
-  console.log('its working', d);
-  return <div>Page</div>;
+  const headersList = headers();
+  console.log(headersList);
+  // const d = await Work();
+  // console.log('its working', d?.data.currentUser);
+  return <div>Page2</div>;
 };
 
 async function Work() {
