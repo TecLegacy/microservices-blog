@@ -35,9 +35,7 @@ export function ProfileForm() {
   });
 
   async function onSubmit(values: FromValue) {
-    // console.log(values);
     const response = await doRequest(values);
-    console.log(response);
   }
 
   if (error && error.length > 0) {
