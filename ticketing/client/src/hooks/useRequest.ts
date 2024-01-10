@@ -1,19 +1,13 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { FromValue } from '@/lib/validation/formValidation';
-
-type Method = 'get' | 'post';
+import { Method, ErrorType } from '@/lib/types';
 
 interface Prop {
   url: string;
   method: Method;
   onSuccess: () => void;
 }
-
-type ErrorType = {
-  message: string;
-  field?: string;
-}[];
 
 export const useRequest = ({ url, method, onSuccess }: Prop) => {
   const [error, setError] = useState<ErrorType | null>(null);

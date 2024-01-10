@@ -1,12 +1,14 @@
 import { getUser } from '@/lib/clientAPI';
 
 export default async function Home() {
-  const currentUser = await getUser();
-  console.log(currentUser, 'xxxxxxxxxxxxxxxxxxx');
-
+  const status = await getUser();
+  console.log(status, 'xxxxxxxxxxxxxxxxxxx');
+  if (!status.currentUser) {
+    return <p className=" text-3xl">You are not Signed In</p>;
+  }
   return (
     <>
-      <h1>Hello</h1>
+      <p className=" text-3xl"> Hey! Welcome </p>
     </>
   );
 }
