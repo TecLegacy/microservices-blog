@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { FC } from 'react';
 import { headers } from 'next/headers';
+import NavBar from '@/components/navBar';
 interface PageProps {}
 
 const Page: FC<PageProps> = async ({}) => {
@@ -8,7 +9,12 @@ const Page: FC<PageProps> = async ({}) => {
   console.log(headersList);
   // const d = await Work();
   // console.log('its working', d?.data.currentUser);
-  return <div>Page2</div>;
+  return (
+    <>
+      <NavBar />
+      <h1>PAGE</h1>
+    </>
+  );
 };
 
 async function Work() {

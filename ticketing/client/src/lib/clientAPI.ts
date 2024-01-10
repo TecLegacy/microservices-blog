@@ -1,42 +1,35 @@
 import axios from 'axios';
 import { headers } from 'next/headers';
+import { CurrentUser } from './types';
 
-/**
- *  returns { currentUser: null } if no active session
- *  else {
-    currentUser: {
-    id: '659cd8a9ac94631481a57827',
-    email: 'test@test.com',
-    iat: 1704777898
-  }} 
- */
-//
-export const getUser = async () => {
+// Get Active session
+const isActiveSession = () => {
   const headersList = headers();
+  const host = headersList.get('host');
 
   const cookies = headersList.get('cookie')?.split('; ');
   const sessionCookie = cookies?.find((cookie) =>
     cookie.startsWith('session='),
   );
 
-  // if (sessionCookie) {
-  //   const sessionValue = sessionCookie.split('=')[1];
-  //   console.log(sessionValue);
-  //   console.log(headersList.get('host'));
-  // }
+  return { sessionCookie, headersList, host };
+};
+
+export const getUser = async (): Promise<CurrentUser | null> => {
   try {
     // K8s ingress clusterIp - cross namespace communication with Pods
     const { data } = await axios.get(
       'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local/api/users/currentuser',
       {
         headers: {
-          host: headersList.get('host'),
-          cookie: sessionCookie,
+          host: isActiveSession().host,
+          cookie: isActiveSession().sessionCookie,
         },
       },
     );
     return data;
   } catch (error) {
     console.error(error);
+    return null;
   }
 };
