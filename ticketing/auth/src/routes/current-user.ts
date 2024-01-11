@@ -1,5 +1,5 @@
 import express from 'express';
-import { currentUser } from '../middleware/current-user';
+import { currentUser } from '@webcafetickets/shared-auth-middleware';
 // import { isAuthenticated } from '../middleware/require-auth';
 
 const router = express.Router();

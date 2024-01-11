@@ -10,9 +10,10 @@ import { signoutRouter } from './routes/signout';
 import { signupRouter } from './routes/signup';
 // import { signinRouter } from '@routes/signin';
 
-import { errorHandler } from './middleware/error-handler';
-
-import { NotFoundError } from './errors/not-found-error';
+import {
+  errorHandler,
+  NotFoundError,
+} from '@webcafetickets/shared-auth-middleware';
 
 const app = express();
 app.set('trust proxy', true); // Trust traffic from ingress-nginx

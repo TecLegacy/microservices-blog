@@ -3,8 +3,10 @@ import jwt from 'jsonwebtoken';
 import express, { Request, Response } from 'express';
 
 import { User } from '../models/user';
-import { BadRequestError } from '../errors/bad-request-error';
-import { validateRequest } from '../middleware/request-validation';
+import {
+  BadRequestError,
+  validateRequest,
+} from '@webcafetickets/shared-auth-middleware';
 
 const router = express.Router();
 
