@@ -22,7 +22,6 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const status = await getUser();
-  console.log('server fettch', status);
   return (
     <html lang="en">
       <body
@@ -31,7 +30,7 @@ export default async function RootLayout({
           fontSans.variable,
         )}
       >
-        <NavBar status={status ? { currentUser: status } : null} />
+        <NavBar status={status ? { currentUser: status.currentUser } : null} />
         <main>{children}</main>
         <Toaster />
       </body>

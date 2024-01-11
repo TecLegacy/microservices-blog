@@ -14,8 +14,10 @@ const isActiveSession = () => {
 
   return { sessionCookie, headersList, host };
 };
-
-export const getUser = async (): Promise<CurrentUser | null> => {
+interface DataUser {
+  currentUser: CurrentUser;
+}
+export const getUser = async (): Promise<DataUser | null> => {
   try {
     // K8s ingress clusterIp - cross namespace communication with Pods
     const { data } = await axios.get(

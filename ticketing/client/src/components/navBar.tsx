@@ -1,6 +1,6 @@
 'use client';
 
-import { FC } from 'react';
+import { FC, useEffect, useLayoutEffect, useState } from 'react';
 import Link from 'next/link';
 import { CurrentUser } from '@/lib/types';
 import { navigationMenuTriggerStyle } from '@/components/ui/navigation-menu';
@@ -10,6 +10,7 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
 } from '@/components/ui/navigation-menu';
+import axios from 'axios';
 
 interface NavBarProps {
   status: {
@@ -18,11 +19,51 @@ interface NavBarProps {
 }
 
 const NavBar: FC<NavBarProps> = ({ status }) => {
-  console.log('In browser', status);
+  const [isLoading, setIsLoading] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      const { data } = await axios.get('/api/users/currentuser');
+
+      setCurrentUser(data);
+      setIsLoading(false);
+    };
+    fetchData();
+  }, []);
+  // useLayoutEffect(() => {
+  //   const fetchData = async () => {
+  //     setIsLoading(true);
+  //     const { data } = await axios.get('/api/users/currentuser');
+  //     setCurrentUser(data);
+  //     setIsLoading(false);
+  //   };
+  //   fetchData();
+  // }, []);
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  const userStatus = currentUser || status;
+  // const userStatus = status;
+
   const link = [
-    !status?.currentUser && { label: 'Sign In', href: '/auth/signin', id: 0 },
-    !status?.currentUser && { label: 'Sign Up', href: '/auth/signup', id: 1 },
-    status?.currentUser && { label: 'Sign Out', href: '/auth/signout', id: 2 },
+    !userStatus?.currentUser?.email && {
+      label: 'Sign In',
+      href: '/auth/signin',
+      id: 0,
+    },
+    !userStatus?.currentUser?.email && {
+      label: 'Sign Up',
+      href: '/auth/signup',
+      id: 1,
+    },
+    userStatus?.currentUser?.email && {
+      label: 'Sign Out',
+      href: '/auth/signout',
+      id: 2,
+    },
   ]
     .filter(Boolean)
     .map((c) => {

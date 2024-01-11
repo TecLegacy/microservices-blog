@@ -6,13 +6,13 @@ import { Method, ErrorType } from '@/lib/types';
 interface Prop {
   url: string;
   method: Method;
-  onSuccess: () => void;
+  onSuccess: (reqData: FromValue | {}) => void;
 }
 
 export const useRequest = ({ url, method, onSuccess }: Prop) => {
   const [error, setError] = useState<ErrorType | null>(null);
 
-  async function doRequest(body: FromValue) {
+  async function doRequest(body: FromValue | {}) {
     try {
       setError(null);
       const response = await axios({
@@ -21,7 +21,7 @@ export const useRequest = ({ url, method, onSuccess }: Prop) => {
         data: body,
       });
       if (onSuccess) {
-        onSuccess();
+        onSuccess(response.data);
       }
       return response.data;
     } catch (err: any) {

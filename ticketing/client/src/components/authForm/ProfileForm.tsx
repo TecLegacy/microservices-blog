@@ -41,11 +41,14 @@ export const ProfileForm: FC<ProfileFormProps> = ({ payload }) => {
   const { doRequest, error } = useRequest({
     url: payload.url,
     method: payload.method,
-    onSuccess: () => router.push('/'),
+    onSuccess: (reqData) => router.push('/'),
   });
 
   async function onSubmit(values: FromValue) {
     const response = await doRequest(values);
+    if (response) {
+      window.location.href = '/';
+    }
   }
 
   if (error && error.length > 0) {
