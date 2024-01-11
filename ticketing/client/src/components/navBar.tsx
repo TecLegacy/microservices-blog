@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, useEffect, useLayoutEffect, useState } from 'react';
+import { FC } from 'react';
 import Link from 'next/link';
 import { CurrentUser } from '@/lib/types';
 import { navigationMenuTriggerStyle } from '@/components/ui/navigation-menu';
@@ -10,7 +10,6 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
 } from '@/components/ui/navigation-menu';
-import axios from 'axios';
 
 interface NavBarProps {
   status: {
@@ -19,34 +18,7 @@ interface NavBarProps {
 }
 
 const NavBar: FC<NavBarProps> = ({ status }) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      const { data } = await axios.get('/api/users/currentuser');
-
-      setCurrentUser(data);
-      setIsLoading(false);
-    };
-    fetchData();
-  }, []);
-  // useLayoutEffect(() => {
-  //   const fetchData = async () => {
-  //     setIsLoading(true);
-  //     const { data } = await axios.get('/api/users/currentuser');
-  //     setCurrentUser(data);
-  //     setIsLoading(false);
-  //   };
-  //   fetchData();
-  // }, []);
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  const userStatus = currentUser || status;
-  // const userStatus = status;
+  const userStatus = status;
 
   const link = [
     !userStatus?.currentUser?.email && {

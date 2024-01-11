@@ -31,6 +31,7 @@ export default async function RootLayout({
         )}
       >
         <NavBar status={status ? { currentUser: status.currentUser } : null} />
+
         <main>{children}</main>
         <Toaster />
       </body>
